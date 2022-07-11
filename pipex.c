@@ -6,19 +6,15 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:10:36 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/11 10:22:52 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/11 13:40:42 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-
-int	pipex()
-{
-
-}
+#include "libft.h"
+#include <stdio.h>
 
 int	main(int argc, char **argv)
 {
-	pipex()
+	ft_printf("%s\n", argv[2]);
 	return (0);
 }

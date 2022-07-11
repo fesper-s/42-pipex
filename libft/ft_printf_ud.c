@@ -6,11 +6,11 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:58:31 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/01 14:35:34 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/11 13:03:48 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 static int	ft_count(int i, long nbr)
 {

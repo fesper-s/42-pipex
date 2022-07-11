@@ -6,11 +6,11 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 09:47:47 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/05 09:54:46 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/11 13:04:13 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 static int	len_hex(unsigned long nbr)
 {

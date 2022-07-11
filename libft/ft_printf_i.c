@@ -6,11 +6,11 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:56:35 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/01 08:17:46 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/11 13:06:39 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 int	ft_printf_i(int i)
 {
