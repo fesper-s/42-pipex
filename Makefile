@@ -2,12 +2,12 @@ NAME	= pipex
 
 CFLAGS	= -Wall -Werror -Wextra
 
-SRCS	=
+SRCS	= pipex.c
 
 OBJS	= $(SRCS:.c=.o)
 
 .c.o:
-			cc $(CFLAGS) -c $< -o $(<:.c=.o)
+			cc $(CFLAGS) -c $< -o $(<:.c=.o) -I ./include
 
 $(NAME):	$(OBJS)
 			make -C ./libft

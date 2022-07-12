@@ -6,13 +6,13 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:12:47 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/07 14:14:52 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/12 14:30:27 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef "PIPEX_H"
-# define "PIPEX_H"
+#ifndef PIPEX_H
+# define PIPEX_H
 
-#include "./libft/libft.h"
+#include "../libft/libft.h"
 
 #endif
