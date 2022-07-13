@@ -12,11 +12,12 @@
 
 #include "pipex.h"
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
-	int	fd;
-	fd = open(argv[1], O_RDONLY);
+	char	*options[3] = {"ls", "-la", NULL};
 
-	close(fd);
+	(void) argc;
+	(void) argv;
+	execve("/usr/bin/ls", options, envp);
 	return (0);
 }

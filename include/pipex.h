@@ -14,7 +14,7 @@
 # define PIPEX_H
 
 # include "../libft/libft.h"
-# include "fcntl.h"
-# include "sys/wait.h"
+# include <fcntl.h>
+# include <sys/wait.h>
 
 #endif
