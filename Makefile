@@ -2,7 +2,7 @@ NAME	= pipex.a
 
 CFLAGS	= -Wall -Werror -Wextra
 
-SRCS	= pipex.c
+SRCS	= ./pipex.c
 
 OBJS	= $(SRCS:.c=.o)
 
@@ -11,21 +11,20 @@ OBJS	= $(SRCS:.c=.o)
 
 $(NAME):	$(OBJS)
 			make -C ./libft
-			cp ./libft/libft.a ./$(NAME)
+			cp ./libft/libft.a $(NAME)
 			ar rcs $(NAME) $(OBJS)
-			cc $(NAME) -o pipex
+			cc $(NAME) -o ./pipex
 
-all:		$(NANE)
+all:		$(NAME)
 
 clean:
 			rm -f $(OBJS)
 			make clean -C ./libft
 
 fclean:		clean
-			rm -f $(NAME) pipex
+			rm -f $(NAME) ./pipex
 			make fclean -C ./libft
 
 re:			fclean all
-			make re -C ./libft
 
 .PHONY:		all clean fclean re
