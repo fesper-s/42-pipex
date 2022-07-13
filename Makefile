@@ -1,4 +1,4 @@
-NAME	= pipex
+NAME	= pipex.a
 
 CFLAGS	= -Wall -Werror -Wextra
 
@@ -13,6 +13,7 @@ $(NAME):	$(OBJS)
 			make -C ./libft
 			cp ./libft/libft.a ./$(NAME)
 			ar rcs $(NAME) $(OBJS)
+			cc $(NAME) -o pipex
 
 all:		$(NANE)
 
@@ -21,9 +22,10 @@ clean:
 			make clean -C ./libft
 
 fclean:		clean
-			rm -f $(NAME)
+			rm -f $(NAME) pipex
 			make fclean -C ./libft
 
 re:			fclean all
+			make re -C ./libft
 
 .PHONY:		all clean fclean re
