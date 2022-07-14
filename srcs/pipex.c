@@ -14,10 +14,13 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*options[3] = {"ls", "-la", NULL};
+	char	**cmds;
+	char	*path;
 
-	(void) argc;
-	(void) argv;
-	execve("/usr/bin/ls", options, envp);
+	if (argc != 5)
+		return (1);
+	cmds[0] = argv[2];
+	cmds[1] = argv[3];
+	path = ft_path(**envp, **cmds);
 	return (0);
 }

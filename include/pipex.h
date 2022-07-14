@@ -17,4 +17,6 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 
+char	*ft_path(char **envp, char *cmd);
+
 #endif
