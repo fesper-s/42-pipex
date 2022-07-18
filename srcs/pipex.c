@@ -6,33 +6,54 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:10:36 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/15 14:51:24 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/18 09:17:43 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*ft_path(char **envp)
+static char	*find_path(char **argv, char **envp)
 {
-	int	i;
+	int		i;
+	char	*env_path;
+	char	**path;
+	char	*cmd_path;
 
 	i = 0;
-	while (envp[i] != '\0')
+	while (envp[i])
 	{
-		if (ft_strnstr(envp[i], "PATH=", 5))
-			break ;
+		if (ft_strnstr(envp[i], "PATH=", 5) != NULL)
+			env_path = ft_strnstr(envp[i], "PATH=", 5);
 		i++;
 	}
+	env_path = ft_strtrim(env_path, "PATH=");
+	path = ft_split(env_path, ':');
+	i = 0;
+	while (path[i])
+	{
+		path[i] = ft_strjoin(path[i], "/");
+		cmd_path = ft_strjoin(path[i], argv[1]);
+		if (access(cmd_path, F_OK | X_OK) == 0)
+			return (cmd_path);
+		free(cmd_path);
+		i++;
+	}
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	int		i;
-	char	**path;
+	char	*path;
 
-	if (argc != 5)
-		return (1);
-	path = ft_path(enpv);
-	execve(path, argv, envp);
+	(void) argc;
+	(void) argv;
+	path = find_path(argv, envp);
+	if (!path)
+	{
+		perror(path);
+		return (-1);
+	}
+	execve(path, &argv[1], envp);
+	free(path);
 	return (0);
 }
