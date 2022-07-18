@@ -6,13 +6,13 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 09:08:21 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/18 09:15:52 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:50:59 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*find_path(char **argv, char **envp)
+static char	*find_path(char	*cmd, char **envp)
 {
 	int		i;
 	char	*env_path;
@@ -32,7 +32,7 @@ static char	*find_path(char **argv, char **envp)
 	while (path[i])
 	{
 		path[i] = ft_strjoin(path[i], "/");
-		cmd_path = ft_strjoin(path[i], argv[1]);
+		cmd_path = ft_strjoin(path[i], cmd);
 		if (access(cmd_path, F_OK | X_OK) == 0)
 			return (cmd_path);
 		free(cmd_path);
@@ -41,19 +41,24 @@ static char	*find_path(char **argv, char **envp)
 	return (0);
 }
 
+char	**get_cmds(char **argv)
+{
+	char	**cmds;
+
+	cmds = ft_split(argv[1], ' ');
+	return (cmds);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	char	*path;
+	char	**cmds;
+	int		i;
 
-	(void) argc;
-	(void) argv;
-	path = find_path(argv, envp);
-	if (!path)
+	cmds = get_cmds(argv);
+	while (cmds[i])
 	{
-		perror(path);
-		return (-1);
+		printf("%s\n", cmds[i]);
+		i++;
 	}
-	execve(path, &argv[1], envp);
-	free(path);
 	return (0);
 }
