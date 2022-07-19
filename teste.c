@@ -6,18 +6,19 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 09:08:21 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/18 14:50:59 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/19 14:05:49 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*find_path(char	*cmd, char **envp)
+static char	*find_path(char	**cmd, char **envp)
 {
 	int		i;
 	char	*env_path;
 	char	**path;
 	char	*cmd_path;
+	char	*temp;
 
 	i = 0;
 	while (envp[i])
@@ -31,8 +32,9 @@ static char	*find_path(char	*cmd, char **envp)
 	i = 0;
 	while (path[i])
 	{
-		path[i] = ft_strjoin(path[i], "/");
-		cmd_path = ft_strjoin(path[i], cmd);
+		temp = ft_strjoin(path[i], "/");
+		cmd_path = ft_strjoin(temp, cmd[0]);
+		free(temp);
 		if (access(cmd_path, F_OK | X_OK) == 0)
 			return (cmd_path);
 		free(cmd_path);
@@ -41,11 +43,11 @@ static char	*find_path(char	*cmd, char **envp)
 	return (0);
 }
 
-char	**get_cmds(char **argv)
+char	**get_cmds(char *cmd)
 {
 	char	**cmds;
 
-	cmds = ft_split(argv[1], ' ');
+	cmds = ft_split(cmd, ' ');
 	return (cmds);
 }
 
@@ -53,12 +55,30 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	**cmds;
 	int		i;
+	char	*path;
+	pid_t	pid;
+	pid_t	pid2;
+	int		fd[2];
 
-	cmds = get_cmds(argv);
-	while (cmds[i])
+	pid = fork();
+	if (pid == -1)
+		return (1);
+	if (pid == 0)
 	{
-		printf("%s\n", cmds[i]);
-		i++;
+		cmds = get_cmds(argv[2]);
+		path = find_path(cmds, envp);
+		ft_printf("comando: %s %s, path: %s\n", cmds[0], cmds[1], path);
+		execve(path, cmds, envp);
+	}
+	pid2 = fork();
+	if (pid2 == -1)
+		return (1);
+	if (pid2 == 0)
+	{
+		cmds = get_cmds(argv[3]);
+		path = find_path(cmds, envp);
+		ft_printf("comando: %s %s, path: %s\n", cmds[0], cmds[1], path);
+		execve(path, cmds, envp);
 	}
 	return (0);
 }
