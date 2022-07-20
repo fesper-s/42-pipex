@@ -6,7 +6,7 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 09:08:21 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/19 14:05:49 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/20 14:49:57 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,9 @@ static char	*find_path(char	**cmd, char **envp)
 			env_path = ft_strnstr(envp[i], "PATH=", 5);
 		i++;
 	}
-	env_path = ft_strtrim(env_path, "PATH=");
-	path = ft_split(env_path, ':');
-	i = 0;
-	while (path[i])
+	path = ft_split(env_path + 5, ':');
+	i = -1;
+	while (path[++i])
 	{
 		temp = ft_strjoin(path[i], "/");
 		cmd_path = ft_strjoin(temp, cmd[0]);
@@ -38,12 +37,11 @@ static char	*find_path(char	**cmd, char **envp)
 		if (access(cmd_path, F_OK | X_OK) == 0)
 			return (cmd_path);
 		free(cmd_path);
-		i++;
 	}
 	return (0);
 }
 
-char	**get_cmds(char *cmd)
+static char	**get_cmds(char *cmd)
 {
 	char	**cmds;
 
@@ -51,34 +49,70 @@ char	**get_cmds(char *cmd)
 	return (cmds);
 }
 
-int	main(int argc, char **argv, char **envp)
+static int	child(pid_t pid, int *fd, char **argv, char **envp)
 {
 	char	**cmds;
-	int		i;
 	char	*path;
+	int		file;
+
+	file = open(argv[1], O_RDONLY);
+	pid = fork();
+	if (pid == -1)
+		return (2);
+	if (pid == 0)
+	{
+		dup2(file, STDIN_FILENO);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+		cmds = get_cmds(argv[2]);
+		path = find_path(cmds, envp);
+		execve(path, cmds, NULL);
+		close(file);
+	}
+	return (pid);
+}
+
+static int	child2(pid_t pid2, int *fd, char **argv, char **envp)
+{
+	char	**cmds;
+	char	*path;
+	int		file2;
+
+	file2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	pid2 = fork();
+	if (pid2 == -1)
+		return (2);
+	if (pid2 == 0)
+	{
+		dup2(fd[0], STDIN_FILENO);
+		dup2(file2, STDOUT_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+		cmds = get_cmds(argv[3]);
+		path = find_path(cmds, envp);
+		execve(path, cmds, NULL);
+		close(file2);
+	}
+	return (pid2);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
 	pid_t	pid;
 	pid_t	pid2;
 	int		fd[2];
 
-	pid = fork();
-	if (pid == -1)
+	if (pipe(fd) == -1)
 		return (1);
-	if (pid == 0)
-	{
-		cmds = get_cmds(argv[2]);
-		path = find_path(cmds, envp);
-		ft_printf("comando: %s %s, path: %s\n", cmds[0], cmds[1], path);
-		execve(path, cmds, envp);
-	}
-	pid2 = fork();
-	if (pid2 == -1)
-		return (1);
-	if (pid2 == 0)
-	{
-		cmds = get_cmds(argv[3]);
-		path = find_path(cmds, envp);
-		ft_printf("comando: %s %s, path: %s\n", cmds[0], cmds[1], path);
-		execve(path, cmds, envp);
-	}
+	pid = 0;
+	pid2 = 0;
+	(void) argc;
+	pid = child(pid, fd, argv, envp);
+	pid2 = child2(pid2, fd, argv, envp);
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(pid, NULL, 0);
+	waitpid(pid2, NULL, 0);
 	return (0);
 }
