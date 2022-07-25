@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/07 14:12:47 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/21 14:17:27 by fesper-s         ###   ########.fr       */
+/*   Created: 2022/07/21 13:17:13 by fesper-s          #+#    #+#             */
+/*   Updated: 2022/07/21 14:17:07 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "pipex.h"
 
-# include "../libft/libft.h"
-# include <fcntl.h>
-# include <sys/wait.h>
-# include <stdio.h>
-# include <string.h>
-# include <errno.h>
+int	file_error(void)
+{
+	ft_putendl_fd(strerror(errno), 2);
+	exit(EXIT_FAILURE);
+	return (1);
+}
 
-char	*ft_path(char **envp, char *cmd);
-int		file_error(void);
-int		cmd_error(void);
-
-#endif
+int	cmd_error(void)
+{
+	ft_putendl_fd(strerror(errno), 2);
+	exit(EXIT_FAILURE);
+	return (1);
+}

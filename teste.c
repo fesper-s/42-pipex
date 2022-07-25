@@ -6,7 +6,7 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 09:08:21 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/20 14:49:57 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/21 08:37:50 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ static char	**get_cmds(char *cmd)
 	return (cmds);
 }
 
-static int	child(pid_t pid, int *fd, char **argv, char **envp)
+static int	child(int *fd, char **argv, char **envp)
 {
+	pid_t	pid;
 	char	**cmds;
 	char	*path;
 	int		file;
@@ -69,12 +70,14 @@ static int	child(pid_t pid, int *fd, char **argv, char **envp)
 		path = find_path(cmds, envp);
 		execve(path, cmds, NULL);
 		close(file);
+		return (pid);
 	}
-	return (pid);
+	return (0);
 }
 
-static int	child2(pid_t pid2, int *fd, char **argv, char **envp)
+static int	child2(int *fd, char **argv, char **envp)
 {
+	pid_t	pid2;
 	char	**cmds;
 	char	*path;
 	int		file2;
@@ -93,8 +96,9 @@ static int	child2(pid_t pid2, int *fd, char **argv, char **envp)
 		path = find_path(cmds, envp);
 		execve(path, cmds, NULL);
 		close(file2);
+		return (pid2);
 	}
-	return (pid2);
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -105,11 +109,9 @@ int	main(int argc, char **argv, char **envp)
 
 	if (pipe(fd) == -1)
 		return (1);
-	pid = 0;
-	pid2 = 0;
 	(void) argc;
-	pid = child(pid, fd, argv, envp);
-	pid2 = child2(pid2, fd, argv, envp);
+	pid = child(fd, argv, envp);
+	pid2 = child2(fd, argv, envp);
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid, NULL, 0);
