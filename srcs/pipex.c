@@ -6,7 +6,7 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:10:36 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/25 14:32:02 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/26 13:52:24 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*find_path(char	**cmd, char **envp)
 			return (cmd_path);
 		free(cmd_path);
 	}
-	perror(cmd[0]);
+	cmd_error(cmd[0]);
 	return (0);
 }
 
@@ -59,7 +59,10 @@ static char	**get_cmds(char *cmd)
 			cmds = ft_split(temp2[i], ' ');
 		}
 		else
-			return (0);
+		{
+			perror(cmd);
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 		cmds = ft_split(cmd, ' ');
@@ -75,10 +78,10 @@ static int	child(int *fd, char **argv, char **envp)
 
 	file = open(argv[1], O_RDONLY);
 	if (file == -1)
-		return (error(argv[1]));
+		error(argv[1]);
 	pid = fork();
 	if (pid == -1)
-		return (2);
+		error("fork");
 	if (pid == 0)
 	{
 		dup2(file, STDIN_FILENO);
@@ -102,10 +105,10 @@ static int	child2(int *fd, char **argv, char **envp)
 
 	file2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (file2 == -1)
-		return (error(argv[4]));
+		error(argv[4]);
 	pid2 = fork();
 	if (pid2 == -1)
-		return (2);
+		error("fork");
 	if (pid2 == 0)
 	{
 		dup2(fd[0], STDIN_FILENO);
@@ -141,5 +144,7 @@ int	main(int argc, char **argv, char **envp)
 		waitpid(pid, NULL, 0);
 		waitpid(pid2, NULL, 0);
 	}
+	else
+		ft_printf("%s\n", strerror(22));
 	return (0);
 }

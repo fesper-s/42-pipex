@@ -6,14 +6,22 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:17:13 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/25 14:06:42 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/26 13:05:18 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	error(char *argv)
+void	error(char *arg)
 {
-	perror(argv);
-	return (0);
+	perror(arg);
+	exit(EXIT_FAILURE);
+}
+
+void	cmd_error(char *cmd)
+{
+	ft_putstr_fd("command not found: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putchar_fd('\n', 2);
+	exit(EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:12:47 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/25 14:06:48 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/26 13:09:06 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <errno.h>
 
 char	*ft_path(char **envp, char *cmd);
-int		error(char *argv);
+void	error(char *arg);
+void	cmd_error(char *cmd);
 
 #endif
