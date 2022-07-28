@@ -6,7 +6,7 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:10:36 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/26 13:52:24 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:41:14 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	**get_cmds(char *cmd)
 		}
 		else
 		{
-			perror(cmd);
+			perror(temp[0]);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -81,7 +81,7 @@ static int	child(int *fd, char **argv, char **envp)
 		error(argv[1]);
 	pid = fork();
 	if (pid == -1)
-		error("fork");
+		fork_error();
 	if (pid == 0)
 	{
 		dup2(file, STDIN_FILENO);
@@ -108,7 +108,7 @@ static int	child2(int *fd, char **argv, char **envp)
 		error(argv[4]);
 	pid2 = fork();
 	if (pid2 == -1)
-		error("fork");
+		fork_error();
 	if (pid2 == 0)
 	{
 		dup2(fd[0], STDIN_FILENO);
@@ -132,7 +132,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc == 5)
 	{
 		if (pipe(fd) == -1)
-			return (1);
+			return (pipe_error());
 		pid = child(fd, argv, envp);
 		pid2 = child2(fd, argv, envp);
 		if (pid == 1)
