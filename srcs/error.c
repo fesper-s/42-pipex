@@ -6,7 +6,7 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:17:13 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/28 13:20:11 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/28 16:43:13 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	fork_error(void)
 	exit(EXIT_FAILURE);
 }
 
-int		pipe_error(void)
+int	pipe_error(void)
 {
 	ft_putstr_fd(strerror(32), 2);
 	ft_putchar_fd('\n', 2);
-	return (0);
+	return (1);
 }
