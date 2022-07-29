@@ -6,7 +6,7 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 08:33:43 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/05/30 07:57:36 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/07/29 15:33:46 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,25 @@ static size_t	ft_wordcount(char const *s, char c)
 	size_t	wordnbr;
 
 	i = 0;
-	wordnbr = 0;
+	wordnbr = 1;
+	while (*s && *s == c)
+		s++;
 	while (s[i])
 	{
 		if (s[i] != c && (s[i - 1] == c || i == 0))
 			wordnbr++;
+		if (s[i] == '"')
+		{
+			i++;
+			while (s[i] != '"')
+				i++;
+		}
+		if (s[i] == 39)
+		{
+			i++;
+			while (s[i] != 39)
+				i++;
+		}
 		i++;
 	}
 	return (wordnbr);
@@ -34,7 +48,21 @@ static size_t	ft_lencount(char const *s, char c)
 
 	i = 0;
 	while (s[i] && s[i] != c)
+	{
+		if (s[i] == '"')
+		{
+			i++;
+			while (s[i] != '"')
+				i++;
+		}
+		if (s[i] == 39)
+		{
+			i++;
+			while (s[i] != 39)
+				i++;
+		}
 		i++;
+	}
 	return (i);
 }
 

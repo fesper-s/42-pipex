@@ -2,7 +2,7 @@ NAME	= pipex.a
 
 CFLAGS	= -Wall -Werror -Wextra
 
-SRCS	= ./srcs/pipex.c ./srcs/error.c
+SRCS	= ./srcs/pipex.c ./srcs/pipex_utils.c ./srcs/error.c
 
 OBJS	= $(SRCS:.c=.o)
 
