@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
+/*   By: fesper-s <fesper-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:12:47 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/07/29 15:18:12 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/08/02 07:22:17 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <string.h>
 # include <errno.h>
 
-char	*ft_path(char **envp, char *cmd);
 char	**ft_trim(char **cmds);
 void	error(char *arg);
 void	cmd_error(char *cmd);
