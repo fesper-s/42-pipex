@@ -6,14 +6,14 @@
 /*   By: fesper-s <fesper-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:12:47 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/08/02 07:22:17 by fesper-s         ###   ########.fr       */
+/*   Updated: 2022/08/02 09:35:16 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "../libft/libft.h"
+# include "./libft/libft.h"
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <stdio.h>
